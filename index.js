@@ -1,5 +1,16 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("DB Ok");
+  })
+  .catch((err) => console.log("DB error", err));
 
 const app = express();
 
@@ -22,7 +33,7 @@ app.post("/auth/login", (req, res) => {
 
   res.json({
     success: true,
-    token
+    token,
   });
 });
 
@@ -30,6 +41,5 @@ app.listen(4444, (err) => {
   if (err) {
     return console.log(err);
   }
-
   console.log("Server Ok");
 });
