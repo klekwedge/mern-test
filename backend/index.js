@@ -1,17 +1,16 @@
 import express from "express";
 import multer from "multer";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import fs from "fs";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from 'cors';
+import cors from "cors";
 
 import {
   registerValidation,
   loginValidation,
   postCreateValidation,
 } from "./validations.js";
-import {checkAuth, handleValidationErrors} from "./utils/index.js";
+import { checkAuth, handleValidationErrors } from "./utils/index.js";
 import { UserController, PostController } from "./controllers/index.js";
 
 dotenv.config();
@@ -27,6 +26,9 @@ const app = express();
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
+    if (!fs.existsSync("uploads")) {
+      fs.mkdirSync("uploads");
+    }
     cb(null, "uploads");
   },
   filename: (_, file, cb) => {
