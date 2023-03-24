@@ -23,6 +23,6 @@ export const postCreateValidation = [
       min: 3,
     })
     .isString(),
-  body("tags", "Неверный формат тэгов (укажите массив)").optional().isString(),
+  body("tags", "Неверный формат тэгов").optional().isString(),
   body("imageUrl", "Неверная ссылка на изображение").optional().isString(),
 ];
